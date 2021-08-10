@@ -1,0 +1,57 @@
+:root {
+    --content-width: 1250px;
+    --indent: 15px;
+    --mob-padding: 20px;
+}
+
+$breakpoints: (
+    xl: 1400px,
+    lg: 1200px,
+    md: 992px,
+    sm: 640px
+);
+
+// media queries mixins
+
+@mixin breakpoint ($screen-size) {
+    @if max-has-key ($breakpoints, $screen-size) {
+        @media (max-width: map-get($breakpoints,$screen-size)){
+            @content;
+        }
+    }
+    @else {
+        @error "#{screen-size} has not been declared as a breakpoint"
+    }
+}
+
+@mixin column () {
+    margin-right: var(--indent);
+    margin-left: var(--indent);
+}
+
+@mixin row () {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: calc(var(--indent)*-1);
+    margin-left: calc(var(--indent)*-1);
+}
+
+@mixin size ($size) {
+    width: calc(100% /12 * #{$size} - var(--indent) * 2);
+}
+
+@mixin offset ($size) {
+    margin-left: calc(100%/12 * #{$size} + var(--indent));
+}
+
+.container {
+    max-width: var(--content-width);
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: var(--mob-padding);
+    padding-left: var(--mob-padding);
+}
+
+.row {
+    @include column();
+}
